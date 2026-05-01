@@ -10,7 +10,9 @@ export function PageShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen pb-24">
       <Sidebar open={open} onClose={() => setOpen(false)} />
       <Header onMenuClick={() => setOpen(true)} />
-      {children}
+      <div key={typeof window !== "undefined" ? window.location.pathname : "page"} className="animate-rise-3d">
+        {children}
+      </div>
       <Footer />
       <BottomNav />
     </div>
