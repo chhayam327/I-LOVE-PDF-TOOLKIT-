@@ -121,7 +121,11 @@
   --glass: oklch(0.21 0.04 260 / 0.6);
   --glass-border: oklch(1 0 0 / 0.1);
   --bg-base: #050505;
-  --gradient-mesh: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(120, 0, 0, 0.45) 0%, rgba(60, 0, 0, 0.25) 30%, rgba(20, 0, 0, 0.1) 55%, transparent 80%);
+  --gradient-mesh:
+    radial-gradient(ellipse 55% 45% at 18% 18%, rgba(180, 20, 20, 0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 82% 22%, rgba(80, 20, 120, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 50% 105%, rgba(140, 0, 40, 0.20) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(120, 0, 0, 0.45) 0%, rgba(60, 0, 0, 0.25) 30%, rgba(20, 0, 0, 0.1) 55%, transparent 80%);
 }
 
 @layer base {
