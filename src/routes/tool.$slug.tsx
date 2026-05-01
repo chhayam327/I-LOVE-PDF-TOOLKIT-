@@ -208,23 +208,38 @@ function ToolPage() {
                 exit={{ opacity: 0 }}
                 className="flex flex-col items-center text-center"
               >
-                <CircularProgress value={progress} />
-                <h3 className="mt-5 text-xl font-extrabold text-secondary">
+                <h3 className="mb-4 text-xl font-extrabold text-secondary">
                   {premium ? "Turbo processing…" : "Processing your file…"}
                 </h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Estimated time: <span className="font-semibold text-secondary">{secondsLeft}s</span>
-                  {premium && (
-                    <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
-                      <Zap className="h-3 w-3" /> 5× FAST
-                    </span>
-                  )}
-                </p>
-                {!premium && (
-                  <div className="mt-8">
-                    <AdSlot width={300} height={250} label="Sponsored" />
+
+                {/* Centered square ad with countdown */}
+                {!premium ? (
+                  <div className="relative mx-auto" style={{ width: "100%", maxWidth: 300 }}>
+                    <AdSlot width={300} height={300} label="Advertisement" />
+                    <div className="pointer-events-none absolute right-2 top-7 flex h-9 min-w-9 items-center justify-center rounded-full bg-secondary/90 px-2 text-sm font-bold text-secondary-foreground shadow-glow ring-2 ring-white/40 backdrop-blur">
+                      {secondsLeft}s
+                    </div>
                   </div>
+                ) : (
+                  <CircularProgress value={progress} />
                 )}
+
+                <div className="mt-5 w-full max-w-sm">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full bg-gradient-primary transition-all"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Ad ends in <span className="font-bold text-secondary">{secondsLeft}s</span> · {progress}%
+                    {premium && (
+                      <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
+                        <Zap className="h-3 w-3" /> 5× FAST
+                      </span>
+                    )}
+                  </p>
+                </div>
               </motion.div>
             )}
 
@@ -235,6 +250,11 @@ function ToolPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col items-center text-center"
               >
+                {!premium && (
+                  <div className="mb-6 w-full">
+                    <AdSlot width={468} height={60} label="Advertisement" />
+                  </div>
+                )}
                 <div className="animate-float flex h-20 w-20 items-center justify-center rounded-full bg-gradient-primary text-primary-foreground shadow-glow">
                   <Download className="h-10 w-10" />
                 </div>
@@ -256,10 +276,22 @@ function ToolPage() {
                 >
                   Process another file
                 </button>
+                {!premium && (
+                  <div className="mt-8 w-full">
+                    <AdSlot width={468} height={60} label="Advertisement" />
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
+
+        {/* Bottom rectangular ad below workspace */}
+        {!premium && (
+          <div className="mt-6 flex justify-center pb-4">
+            <AdSlot width={728} height={90} label="Advertisement" />
+          </div>
+        )}
       </main>
     </PageShell>
   );
