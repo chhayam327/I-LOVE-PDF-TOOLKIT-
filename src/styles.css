@@ -85,7 +85,12 @@
   /* Gradients & shadows */
   --gradient-primary: linear-gradient(135deg, oklch(0.605 0.218 27), oklch(0.7 0.22 25));
   --bg-base: #F9F9FB;
-  --gradient-mesh: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(220, 220, 230, 0.55) 0%, rgba(240, 240, 245, 0.25) 40%, transparent 75%);
+  --gradient-mesh:
+    radial-gradient(ellipse 60% 45% at 20% 15%, rgba(229, 50, 46, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 40% at 85% 20%, rgba(99, 102, 241, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgba(236, 72, 153, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(220, 220, 230, 0.55) 0%, rgba(240, 240, 245, 0.25) 40%, transparent 75%);
+  --bg-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   --shadow-float: 0 1px 2px oklch(0.21 0.04 260 / 0.04),
                   0 8px 24px -8px oklch(0.21 0.04 260 / 0.10),
                   0 24px 48px -16px oklch(0.21 0.04 260 / 0.10);
@@ -116,13 +121,18 @@
   --glass: oklch(0.21 0.04 260 / 0.6);
   --glass-border: oklch(1 0 0 / 0.1);
   --bg-base: #050505;
-  --gradient-mesh: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(120, 0, 0, 0.45) 0%, rgba(60, 0, 0, 0.25) 30%, rgba(20, 0, 0, 0.1) 55%, transparent 80%);
+  --gradient-mesh:
+    radial-gradient(ellipse 55% 45% at 18% 18%, rgba(180, 20, 20, 0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 82% 22%, rgba(80, 20, 120, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 50% 105%, rgba(140, 0, 40, 0.20) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(120, 0, 0, 0.45) 0%, rgba(60, 0, 0, 0.25) 30%, rgba(20, 0, 0, 0.1) 55%, transparent 80%);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
   html { background-color: var(--bg-base); transition: background-color 600ms ease; }
   body {
+    position: relative;
     background-color: var(--bg-base);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -132,7 +142,44 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     transition: background-color 600ms ease, color 400ms ease;
+    perspective: 1200px;
   }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: var(--bg-grain, none);
+    background-repeat: repeat;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dark body::before { opacity: 0.35; mix-blend-mode: soft-light; }
+  body::after {
+    content: "";
+    position: fixed; inset: -10%;
+    background:
+      radial-gradient(circle at 15% 25%, var(--orb-1, rgba(229, 50, 46, 0.18)) 0%, transparent 35%),
+      radial-gradient(circle at 85% 30%, var(--orb-2, rgba(99, 102, 241, 0.15)) 0%, transparent 35%),
+      radial-gradient(circle at 50% 90%, var(--orb-3, rgba(236, 72, 153, 0.15)) 0%, transparent 40%);
+    filter: blur(40px) saturate(1.2);
+    animation: aurora-drift 22s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dark body::after {
+    --orb-1: rgba(180, 20, 20, 0.45);
+    --orb-2: rgba(80, 20, 120, 0.35);
+    --orb-3: rgba(140, 0, 40, 0.40);
+    filter: blur(60px) saturate(1.4);
+  }
+  body > * { position: relative; z-index: 1; }
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(2%, -1.5%, 0) scale(1.05); }
+  100% { transform: translate3d(-2%, 2%, 0) scale(1.03); }
 }
 
 @layer utilities {
@@ -194,5 +241,53 @@
     content: ""; position: absolute; inset: 0; z-index: -1;
     margin: -1px; border-radius: inherit;
     background: var(--gradient-primary);
+  }
+
+  /* ===== 3D / Premium animations ===== */
+  .perspective-1000 { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+
+  @keyframes tilt-3d {
+    0%, 100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0); }
+    25%      { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(8px); }
+    75%      { transform: perspective(1000px) rotateX(-2deg) rotateY(2deg) translateZ(8px); }
+  }
+  .animate-tilt-3d { animation: tilt-3d 9s ease-in-out infinite; transform-style: preserve-3d; }
+
+  /* Hover 3D lift */
+  .hover-3d {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .hover-3d:hover {
+    transform: perspective(900px) translateY(-4px) rotateX(3deg) rotateY(-3deg) scale(1.015);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.25), 0 18px 36px -18px rgba(229, 50, 46, 0.35);
+  }
+
+  /* Soft 3D entrance */
+  @keyframes rise-3d {
+    0%   { opacity: 0; transform: perspective(900px) translateY(24px) rotateX(-8deg) scale(0.96); }
+    100% { opacity: 1; transform: perspective(900px) translateY(0) rotateX(0) scale(1); }
+  }
+  .animate-rise-3d { animation: rise-3d 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  /* Slow rotating conic shimmer for hero accents */
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow { animation: spin-slow 18s linear infinite; }
+
+  /* Floating with rotation for icons / orbs */
+  @keyframes float-3d {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-10px) rotate(2deg); }
+  }
+  .animate-float-3d { animation: float-3d 6s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-tilt-3d, .animate-float-3d, .animate-spin-slow, .animate-rise-3d,
+    body::after { animation: none !important; }
+    .hover-3d:hover { transform: none; }
   }
 }
