@@ -85,7 +85,12 @@
   /* Gradients & shadows */
   --gradient-primary: linear-gradient(135deg, oklch(0.605 0.218 27), oklch(0.7 0.22 25));
   --bg-base: #F9F9FB;
-  --gradient-mesh: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(220, 220, 230, 0.55) 0%, rgba(240, 240, 245, 0.25) 40%, transparent 75%);
+  --gradient-mesh:
+    radial-gradient(ellipse 60% 45% at 20% 15%, rgba(229, 50, 46, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 40% at 85% 20%, rgba(99, 102, 241, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgba(236, 72, 153, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(220, 220, 230, 0.55) 0%, rgba(240, 240, 245, 0.25) 40%, transparent 75%);
+  --bg-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   --shadow-float: 0 1px 2px oklch(0.21 0.04 260 / 0.04),
                   0 8px 24px -8px oklch(0.21 0.04 260 / 0.10),
                   0 24px 48px -16px oklch(0.21 0.04 260 / 0.10);
