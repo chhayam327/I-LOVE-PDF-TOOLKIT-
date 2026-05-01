@@ -276,6 +276,10 @@ function ToolPage() {
                 >
                   Process another file
                 </button>
+
+                {/* Share section */}
+                <ShareSection title={tool.title} />
+
                 {!premium && (
                   <div className="mt-8 w-full">
                     <AdSlot width={468} height={60} label="Advertisement" />
@@ -289,7 +293,7 @@ function ToolPage() {
         {/* Bottom rectangular ad below workspace */}
         {!premium && (
           <div className="mt-6 flex justify-center pb-4">
-            <AdSlot width={728} height={90} label="Advertisement" />
+            <AdSlot width={970} height={120} label="Bottom Sponsored" />
           </div>
         )}
       </main>
