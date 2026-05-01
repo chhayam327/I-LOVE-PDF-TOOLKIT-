@@ -13,10 +13,10 @@ export function ToolCard({ tool, index }: { tool: Tool; index: number }) {
       <Link
         to="/tool/$slug"
         params={{ slug: tool.slug }}
-        className="shine glass shadow-float group flex items-start gap-4 rounded-2xl p-4 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.99]"
+        className="shine glass shadow-float hover-3d group flex items-start gap-4 rounded-2xl p-4 active:scale-[0.99]"
       >
         <div
-          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${tool.hue} shadow-sm transition-transform group-hover:rotate-3`}
+          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${tool.hue} shadow-sm transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110 animate-float-3d`}
         >
           <Icon className="h-6 w-6" strokeWidth={2.2} />
         </div>
