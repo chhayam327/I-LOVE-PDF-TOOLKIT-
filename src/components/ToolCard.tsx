@@ -20,9 +20,9 @@ export function ToolCard({ tool, index }: { tool: Tool; index: number }) {
         >
           <Icon className="h-6 w-6" strokeWidth={2.2} />
         </div>
-        <div className="min-w-0">
-          <h3 className="text-base font-bold text-secondary">{tool.title}</h3>
-          <p className="mt-0.5 text-sm leading-snug text-muted-foreground line-clamp-2">{tool.desc}</p>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-base font-extrabold leading-tight text-foreground">{tool.title}</h3>
+          <p className="mt-1 text-sm leading-snug text-muted-foreground line-clamp-2">{tool.desc}</p>
         </div>
       </Link>
     </motion.div>
