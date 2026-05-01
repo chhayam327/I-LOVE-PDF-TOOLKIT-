@@ -54,7 +54,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
               return (
                 <li key={to}>
                   <Link
-                    to={to}
+                    to={to as "/"}
                     onClick={onClose}
                     className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all ${
                       active
