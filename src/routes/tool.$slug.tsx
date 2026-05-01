@@ -49,10 +49,12 @@ type Stage = "upload" | "converting" | "done";
 function ToolPage() {
   const { tool } = Route.useLoaderData();
   const Icon = tool.icon;
+  const premium = usePremium();
+  const totalDuration = premium ? 2000 : 10000;
   const [stage, setStage] = useState<Stage>("upload");
   const [files, setFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState(0);
-  const [secondsLeft, setSecondsLeft] = useState(10);
+  const [secondsLeft, setSecondsLeft] = useState(premium ? 2 : 10);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -68,14 +70,14 @@ function ToolPage() {
     }
     setStage("converting");
     setProgress(0);
-    setSecondsLeft(10);
+    setSecondsLeft(premium ? 2 : 10);
   };
 
-  // Drive 10s countdown + progress while "converting"
+  // Drive countdown + progress while "converting"
   useEffect(() => {
     if (stage !== "converting") return;
     const start = Date.now();
-    const total = 10000;
+    const total = totalDuration;
     const id = setInterval(() => {
       const elapsed = Date.now() - start;
       const pct = Math.min(100, Math.round((elapsed / total) * 100));
@@ -123,12 +125,16 @@ function ToolPage() {
           </div>
         </div>
 
-        {/* Top ad: 728x90 */}
-        <div className="mt-6 flex justify-center">
-          <AdSlot width={728} height={90} />
-        </div>
-
-        {/* Workspace card */}
+        {/* Top ad: 728x90 — hidden for premium */}
+        {!premium ? (
+          <div className="mt-6 flex justify-center">
+            <AdSlot width={728} height={90} />
+          </div>
+        ) : (
+          <div className="mt-6 flex items-center justify-center gap-2 rounded-full bg-gradient-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-glow">
+            <Crown className="h-4 w-4" /> Premium · Ad-free experience
+          </div>
+        )}
         <div className="glass shadow-float mt-6 overflow-hidden rounded-3xl p-5 sm:p-8">
           <AnimatePresence mode="wait">
             {stage === "upload" && (
