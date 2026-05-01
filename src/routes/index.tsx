@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useState, Fragment } from "react";
 import { motion } from "framer-motion";
 import { PageShell } from "@/components/PageShell";
 import { ToolCard } from "@/components/ToolCard";
+import { AdSlot } from "@/components/AdSlot";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 
 export const Route = createFileRoute("/")({
@@ -71,11 +72,16 @@ function Index() {
         </div>
       </section>
 
-      {/* Tools grid */}
-      <section className="mx-auto max-w-2xl px-4">
-        <div className="flex flex-col gap-3">
+      {/* Tools grid with inline ad strips between every tool (1cm gap) */}
+      <section className="mx-auto max-w-2xl px-4 pt-4">
+        <div className="flex flex-col" style={{ gap: "1cm" }}>
           {filtered.map((tool, i) => (
-            <ToolCard key={tool.slug} tool={tool} index={i} />
+            <Fragment key={tool.slug}>
+              <ToolCard tool={tool} index={i} />
+              <div className="flex justify-center">
+                <AdSlot width={468} height={60} label="Advertisement" />
+              </div>
+            </Fragment>
           ))}
         </div>
       </section>
