@@ -250,6 +250,11 @@ function ToolPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col items-center text-center"
               >
+                {!premium && (
+                  <div className="mb-6 w-full">
+                    <AdSlot width={468} height={60} label="Advertisement" />
+                  </div>
+                )}
                 <div className="animate-float flex h-20 w-20 items-center justify-center rounded-full bg-gradient-primary text-primary-foreground shadow-glow">
                   <Download className="h-10 w-10" />
                 </div>
@@ -271,6 +276,11 @@ function ToolPage() {
                 >
                   Process another file
                 </button>
+                {!premium && (
+                  <div className="mt-8 w-full">
+                    <AdSlot width={468} height={60} label="Advertisement" />
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
