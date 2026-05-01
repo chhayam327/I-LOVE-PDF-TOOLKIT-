@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RecentRouteImport } from './routes/recent'
+import { Route as PremiumRouteImport } from './routes/premium'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolSlugRouteImport } from './routes/tool.$slug'
 
@@ -22,6 +23,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const RecentRoute = RecentRouteImport.update({
   id: '/recent',
   path: '/recent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PremiumRoute = PremiumRouteImport.update({
+  id: '/premium',
+  path: '/premium',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const ToolSlugRoute = ToolSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/premium': typeof PremiumRoute
   '/recent': typeof RecentRoute
   '/settings': typeof SettingsRoute
   '/tool/$slug': typeof ToolSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/premium': typeof PremiumRoute
   '/recent': typeof RecentRoute
   '/settings': typeof SettingsRoute
   '/tool/$slug': typeof ToolSlugRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/premium': typeof PremiumRoute
   '/recent': typeof RecentRoute
   '/settings': typeof SettingsRoute
   '/tool/$slug': typeof ToolSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/recent' | '/settings' | '/tool/$slug'
+  fullPaths: '/' | '/premium' | '/recent' | '/settings' | '/tool/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/recent' | '/settings' | '/tool/$slug'
-  id: '__root__' | '/' | '/recent' | '/settings' | '/tool/$slug'
+  to: '/' | '/premium' | '/recent' | '/settings' | '/tool/$slug'
+  id: '__root__' | '/' | '/premium' | '/recent' | '/settings' | '/tool/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PremiumRoute: typeof PremiumRoute
   RecentRoute: typeof RecentRoute
   SettingsRoute: typeof SettingsRoute
   ToolSlugRoute: typeof ToolSlugRoute
@@ -85,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/premium': {
+      id: '/premium'
+      path: '/premium'
+      fullPath: '/premium'
+      preLoaderRoute: typeof PremiumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PremiumRoute: PremiumRoute,
   RecentRoute: RecentRoute,
   SettingsRoute: SettingsRoute,
   ToolSlugRoute: ToolSlugRoute,

@@ -2,12 +2,11 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
-import { ArrowLeft, Download, UploadCloud, X, FileText } from "lucide-react";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { BottomNav } from "@/components/BottomNav";
+import { ArrowLeft, Crown, Download, FileText, UploadCloud, X, Zap } from "lucide-react";
+import { PageShell } from "@/components/PageShell";
 import { AdSlot } from "@/components/AdSlot";
 import { getTool } from "@/data/tools";
+import { usePremium } from "@/lib/premium";
 
 export const Route = createFileRoute("/tool/$slug")({
   component: ToolPage,
@@ -50,10 +49,12 @@ type Stage = "upload" | "converting" | "done";
 function ToolPage() {
   const { tool } = Route.useLoaderData();
   const Icon = tool.icon;
+  const premium = usePremium();
+  const totalDuration = premium ? 2000 : 10000;
   const [stage, setStage] = useState<Stage>("upload");
   const [files, setFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState(0);
-  const [secondsLeft, setSecondsLeft] = useState(10);
+  const [secondsLeft, setSecondsLeft] = useState(premium ? 2 : 10);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -69,14 +70,14 @@ function ToolPage() {
     }
     setStage("converting");
     setProgress(0);
-    setSecondsLeft(10);
+    setSecondsLeft(premium ? 2 : 10);
   };
 
-  // Drive 10s countdown + progress while "converting"
+  // Drive countdown + progress while "converting"
   useEffect(() => {
     if (stage !== "converting") return;
     const start = Date.now();
-    const total = 10000;
+    const total = totalDuration;
     const id = setInterval(() => {
       const elapsed = Date.now() - start;
       const pct = Math.min(100, Math.round((elapsed / total) * 100));
@@ -107,8 +108,7 @@ function ToolPage() {
   };
 
   return (
-    <div className="min-h-screen pb-24">
-      <Header />
+    <PageShell>
       <main className="mx-auto max-w-3xl px-4 pt-6">
         <Link to="/" className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-secondary">
           <ArrowLeft className="h-4 w-4" /> All tools
@@ -125,12 +125,16 @@ function ToolPage() {
           </div>
         </div>
 
-        {/* Top ad: 728x90 */}
-        <div className="mt-6 flex justify-center">
-          <AdSlot width={728} height={90} />
-        </div>
-
-        {/* Workspace card */}
+        {/* Top ad: 728x90 — hidden for premium */}
+        {!premium ? (
+          <div className="mt-6 flex justify-center">
+            <AdSlot width={728} height={90} />
+          </div>
+        ) : (
+          <div className="mt-6 flex items-center justify-center gap-2 rounded-full bg-gradient-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-glow">
+            <Crown className="h-4 w-4" /> Premium · Ad-free experience
+          </div>
+        )}
         <div className="glass shadow-float mt-6 overflow-hidden rounded-3xl p-5 sm:p-8">
           <AnimatePresence mode="wait">
             {stage === "upload" && (
@@ -205,13 +209,22 @@ function ToolPage() {
                 className="flex flex-col items-center text-center"
               >
                 <CircularProgress value={progress} />
-                <h3 className="mt-5 text-xl font-extrabold text-secondary">Processing your file…</h3>
+                <h3 className="mt-5 text-xl font-extrabold text-secondary">
+                  {premium ? "Turbo processing…" : "Processing your file…"}
+                </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
                   Estimated time: <span className="font-semibold text-secondary">{secondsLeft}s</span>
+                  {premium && (
+                    <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
+                      <Zap className="h-3 w-3" /> 5× FAST
+                    </span>
+                  )}
                 </p>
-                <div className="mt-8">
-                  <AdSlot width={300} height={250} label="Sponsored" />
-                </div>
+                {!premium && (
+                  <div className="mt-8">
+                    <AdSlot width={300} height={250} label="Sponsored" />
+                  </div>
+                )}
               </motion.div>
             )}
 
@@ -248,10 +261,7 @@ function ToolPage() {
           </AnimatePresence>
         </div>
       </main>
-
-      <Footer />
-      <BottomNav />
-    </div>
+    </PageShell>
   );
 }
 

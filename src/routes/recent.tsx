@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Clock } from "lucide-react";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { BottomNav } from "@/components/BottomNav";
+import { PageShell } from "@/components/PageShell";
 
 export const Route = createFileRoute("/recent")({
   component: Recent,
@@ -11,8 +9,7 @@ export const Route = createFileRoute("/recent")({
 
 function Recent() {
   return (
-    <div className="min-h-screen pb-24">
-      <Header />
+    <PageShell>
       <main className="mx-auto max-w-3xl px-4 pt-10 text-center">
         <div className="glass shadow-float mx-auto rounded-3xl p-10">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
@@ -24,8 +21,6 @@ function Recent() {
           </p>
         </div>
       </main>
-      <Footer />
-      <BottomNav />
-    </div>
+    </PageShell>
   );
 }

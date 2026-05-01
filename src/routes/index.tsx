@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Header } from "@/components/Header";
-import { BottomNav } from "@/components/BottomNav";
-import { Footer } from "@/components/Footer";
+import { PageShell } from "@/components/PageShell";
 import { ToolCard } from "@/components/ToolCard";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 
@@ -25,8 +23,8 @@ function Index() {
   );
 
   return (
-    <div className="min-h-screen pb-24">
-      <Header />
+    <PageShell>
+      <></>
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -82,8 +80,6 @@ function Index() {
         </div>
       </section>
 
-      <Footer />
-      <BottomNav />
-    </div>
+    </PageShell>
   );
 }
