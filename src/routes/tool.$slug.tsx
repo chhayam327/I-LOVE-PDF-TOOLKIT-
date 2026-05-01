@@ -2,12 +2,11 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
-import { ArrowLeft, Download, UploadCloud, X, FileText } from "lucide-react";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { BottomNav } from "@/components/BottomNav";
+import { ArrowLeft, Crown, Download, FileText, UploadCloud, X, Zap } from "lucide-react";
+import { PageShell } from "@/components/PageShell";
 import { AdSlot } from "@/components/AdSlot";
 import { getTool } from "@/data/tools";
+import { usePremium } from "@/lib/premium";
 
 export const Route = createFileRoute("/tool/$slug")({
   component: ToolPage,
