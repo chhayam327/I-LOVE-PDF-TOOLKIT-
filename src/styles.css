@@ -115,6 +115,8 @@
   --ring: oklch(0.65 0.22 27);
   --glass: oklch(0.21 0.04 260 / 0.6);
   --glass-border: oklch(1 0 0 / 0.1);
+  --bg-base: #050505;
+  --gradient-mesh: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(120, 0, 0, 0.45) 0%, rgba(60, 0, 0, 0.25) 30%, rgba(20, 0, 0, 0.1) 55%, transparent 80%);
 }
 
 @layer base {
