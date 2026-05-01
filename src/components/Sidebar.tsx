@@ -2,12 +2,13 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { Home, Clock, Settings, Crown, Heart, Moon, Sun, X } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
-const items = [
+type NavItem = { to: string; label: string; icon: typeof Home; highlight?: boolean };
+const items: NavItem[] = [
   { to: "/", label: "Home", icon: Home },
   { to: "/recent", label: "Recent", icon: Clock },
   { to: "/settings", label: "Settings", icon: Settings },
   { to: "/premium", label: "Premium", icon: Crown, highlight: true },
-] as const;
+];
 
 export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
