@@ -132,6 +132,7 @@
   * { border-color: var(--color-border); }
   html { background-color: var(--bg-base); transition: background-color 600ms ease; }
   body {
+    position: relative;
     background-color: var(--bg-base);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -141,7 +142,44 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     transition: background-color 600ms ease, color 400ms ease;
+    perspective: 1200px;
   }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: var(--bg-grain, none);
+    background-repeat: repeat;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dark body::before { opacity: 0.35; mix-blend-mode: soft-light; }
+  body::after {
+    content: "";
+    position: fixed; inset: -10%;
+    background:
+      radial-gradient(circle at 15% 25%, var(--orb-1, rgba(229, 50, 46, 0.18)) 0%, transparent 35%),
+      radial-gradient(circle at 85% 30%, var(--orb-2, rgba(99, 102, 241, 0.15)) 0%, transparent 35%),
+      radial-gradient(circle at 50% 90%, var(--orb-3, rgba(236, 72, 153, 0.15)) 0%, transparent 40%);
+    filter: blur(40px) saturate(1.2);
+    animation: aurora-drift 22s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dark body::after {
+    --orb-1: rgba(180, 20, 20, 0.45);
+    --orb-2: rgba(80, 20, 120, 0.35);
+    --orb-3: rgba(140, 0, 40, 0.40);
+    filter: blur(60px) saturate(1.4);
+  }
+  body > * { position: relative; z-index: 1; }
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(2%, -1.5%, 0) scale(1.05); }
+  100% { transform: translate3d(-2%, 2%, 0) scale(1.03); }
 }
 
 @layer utilities {
