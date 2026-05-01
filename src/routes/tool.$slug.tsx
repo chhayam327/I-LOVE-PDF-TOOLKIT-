@@ -285,6 +285,13 @@ function ToolPage() {
             )}
           </AnimatePresence>
         </div>
+
+        {/* Bottom rectangular ad below workspace */}
+        {!premium && (
+          <div className="mt-6 flex justify-center pb-4">
+            <AdSlot width={728} height={90} label="Advertisement" />
+          </div>
+        )}
       </main>
     </PageShell>
   );
