@@ -106,8 +106,7 @@ function ToolPage() {
   };
 
   return (
-    <div className="min-h-screen pb-24">
-      <Header />
+    <PageShell>
       <main className="mx-auto max-w-3xl px-4 pt-6">
         <Link to="/" className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-secondary">
           <ArrowLeft className="h-4 w-4" /> All tools
@@ -247,10 +246,7 @@ function ToolPage() {
           </AnimatePresence>
         </div>
       </main>
-
-      <Footer />
-      <BottomNav />
-    </div>
+    </PageShell>
   );
 }
 
