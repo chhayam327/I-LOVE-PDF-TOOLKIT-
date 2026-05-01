@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Clock, Settings, Crown, Heart, Moon, Sun, X } from "lucide-react";
+import { Home, Clock, Settings, Crown, Heart, Moon, Sun, X, LogIn, UserPlus, User } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 type NavItem = { to: string; label: string; icon: typeof Home; highlight?: boolean };
