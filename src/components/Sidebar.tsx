@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Clock, Settings, Crown, Heart, Moon, Sun, X } from "lucide-react";
+import { Home, Clock, Settings, Crown, Heart, Moon, Sun, X, LogIn, UserPlus, User } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 type NavItem = { to: string; label: string; icon: typeof Home; highlight?: boolean };
@@ -76,6 +76,42 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
               );
             })}
           </ul>
+
+          {/* Account section */}
+          <div className="mt-6">
+            <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+              Account
+            </p>
+            <ul className="space-y-1">
+              <li>
+                <Link
+                  to={"/login" as "/"}
+                  onClick={onClose}
+                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-secondary transition-all hover:bg-muted"
+                >
+                  <LogIn className="h-5 w-5 text-primary" /> Log in
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/signup" as "/"}
+                  onClick={onClose}
+                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-secondary transition-all hover:bg-muted"
+                >
+                  <UserPlus className="h-5 w-5 text-primary" /> Sign up
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/signin" as "/"}
+                  onClick={onClose}
+                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-secondary transition-all hover:bg-muted"
+                >
+                  <User className="h-5 w-5 text-primary" /> Sign in
+                </Link>
+              </li>
+            </ul>
+          </div>
         </nav>
 
         {/* Theme toggle */}

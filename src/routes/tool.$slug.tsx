@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
-import { ArrowLeft, Crown, Download, FileText, UploadCloud, X, Zap } from "lucide-react";
+import { ArrowLeft, Crown, Download, FileText, UploadCloud, X, Zap, Share2, Copy, Mail, MessageCircle, Send, Facebook, Twitter, Linkedin } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { AdSlot } from "@/components/AdSlot";
 import { getTool } from "@/data/tools";
@@ -128,7 +128,7 @@ function ToolPage() {
         {/* Top ad: 728x90 — hidden for premium */}
         {!premium ? (
           <div className="mt-6 flex justify-center">
-            <AdSlot width={728} height={90} />
+            <AdSlot width={970} height={120} label="Top Sponsored" />
           </div>
         ) : (
           <div className="mt-6 flex items-center justify-center gap-2 rounded-full bg-gradient-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-glow">
@@ -276,6 +276,10 @@ function ToolPage() {
                 >
                   Process another file
                 </button>
+
+                {/* Share section */}
+                <ShareSection title={tool.title} />
+
                 {!premium && (
                   <div className="mt-8 w-full">
                     <AdSlot width={468} height={60} label="Advertisement" />
@@ -289,7 +293,7 @@ function ToolPage() {
         {/* Bottom rectangular ad below workspace */}
         {!premium && (
           <div className="mt-6 flex justify-center pb-4">
-            <AdSlot width={728} height={90} label="Advertisement" />
+            <AdSlot width={970} height={120} label="Bottom Sponsored" />
           </div>
         )}
       </main>
@@ -322,6 +326,82 @@ function CircularProgress({ value }: { value: number }) {
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
         <span className="text-3xl font-extrabold text-gradient-primary">{value}%</span>
+      </div>
+    </div>
+  );
+}
+
+function ShareSection({ title }: { title: string }) {
+  const [copied, setCopied] = useState(false);
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "https://i-love-pdf-toolkitt.lovable.app";
+  const text = `I just used ${title} on I Love PDF TOOLKIT — try it!`;
+  const eUrl = encodeURIComponent(shareUrl);
+  const eText = encodeURIComponent(text);
+
+  const targets = [
+    { name: "WhatsApp", icon: MessageCircle, color: "bg-[#25D366] text-white", href: `https://wa.me/?text=${eText}%20${eUrl}` },
+    { name: "Telegram", icon: Send, color: "bg-[#229ED9] text-white", href: `https://t.me/share/url?url=${eUrl}&text=${eText}` },
+    { name: "Facebook", icon: Facebook, color: "bg-[#1877F2] text-white", href: `https://www.facebook.com/sharer/sharer.php?u=${eUrl}` },
+    { name: "X / Twitter", icon: Twitter, color: "bg-black text-white", href: `https://twitter.com/intent/tweet?text=${eText}&url=${eUrl}` },
+    { name: "LinkedIn", icon: Linkedin, color: "bg-[#0A66C2] text-white", href: `https://www.linkedin.com/sharing/share-offsite/?url=${eUrl}` },
+    { name: "Email", icon: Mail, color: "bg-secondary text-secondary-foreground", href: `mailto:?subject=${encodeURIComponent(title)}&body=${eText}%20${eUrl}` },
+  ];
+
+  const nativeShare = async () => {
+    if (typeof navigator !== "undefined" && (navigator as Navigator).share) {
+      try { await (navigator as Navigator).share({ title, text, url: shareUrl }); } catch {}
+    }
+  };
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {}
+  };
+
+  return (
+    <div className="mt-8 w-full">
+      <div className="glass shadow-float rounded-2xl p-5">
+        <div className="mb-4 flex items-center justify-center gap-2">
+          <Share2 className="h-5 w-5 text-primary" />
+          <h4 className="text-base font-extrabold text-secondary">Share your file</h4>
+        </div>
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+          {targets.map((t) => (
+            <a
+              key={t.name}
+              href={t.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover-3d flex flex-col items-center gap-1.5 rounded-xl p-2 transition-transform"
+            >
+              <span className={`flex h-12 w-12 items-center justify-center rounded-full shadow-md ${t.color}`}>
+                <t.icon className="h-5 w-5" />
+              </span>
+              <span className="text-[11px] font-semibold text-muted-foreground">{t.name}</span>
+            </a>
+          ))}
+        </div>
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <button
+            type="button"
+            onClick={copy}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold text-secondary hover:bg-muted"
+          >
+            <Copy className="h-4 w-4" />
+            {copied ? "Link copied!" : "Copy link"}
+          </button>
+          <button
+            type="button"
+            onClick={nativeShare}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-glow"
+          >
+            <Share2 className="h-4 w-4" />
+            More options
+          </button>
+        </div>
       </div>
     </div>
   );
