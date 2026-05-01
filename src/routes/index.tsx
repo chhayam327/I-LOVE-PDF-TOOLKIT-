@@ -23,8 +23,8 @@ function Index() {
   );
 
   return (
-    <div className="min-h-screen pb-24">
-      <Header />
+    <PageShell>
+      <></>
 
       {/* Hero */}
       <section className="relative overflow-hidden">
