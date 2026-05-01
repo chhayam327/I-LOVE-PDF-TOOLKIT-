@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as PremiumRouteImport } from './routes/premium'
@@ -20,6 +21,11 @@ import { Route as ToolSlugRouteImport } from './routes/tool.$slug'
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/premium': typeof PremiumRoute
   '/recent': typeof RecentRoute
   '/settings': typeof SettingsRoute
+  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/tool/$slug': typeof ToolSlugRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/premium': typeof PremiumRoute
   '/recent': typeof RecentRoute
   '/settings': typeof SettingsRoute
+  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/tool/$slug': typeof ToolSlugRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/premium': typeof PremiumRoute
   '/recent': typeof RecentRoute
   '/settings': typeof SettingsRoute
+  '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/tool/$slug': typeof ToolSlugRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/premium'
     | '/recent'
     | '/settings'
+    | '/signin'
     | '/signup'
     | '/tool/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/premium'
     | '/recent'
     | '/settings'
+    | '/signin'
     | '/signup'
     | '/tool/$slug'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/premium'
     | '/recent'
     | '/settings'
+    | '/signin'
     | '/signup'
     | '/tool/$slug'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   PremiumRoute: typeof PremiumRoute
   RecentRoute: typeof RecentRoute
   SettingsRoute: typeof SettingsRoute
+  SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
   ToolSlugRoute: typeof ToolSlugRoute
 }
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   PremiumRoute: PremiumRoute,
   RecentRoute: RecentRoute,
   SettingsRoute: SettingsRoute,
+  SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
   ToolSlugRoute: ToolSlugRoute,
 }
