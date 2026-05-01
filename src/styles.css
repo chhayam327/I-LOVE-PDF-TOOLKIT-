@@ -242,4 +242,52 @@
     margin: -1px; border-radius: inherit;
     background: var(--gradient-primary);
   }
+
+  /* ===== 3D / Premium animations ===== */
+  .perspective-1000 { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+
+  @keyframes tilt-3d {
+    0%, 100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0); }
+    25%      { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(8px); }
+    75%      { transform: perspective(1000px) rotateX(-2deg) rotateY(2deg) translateZ(8px); }
+  }
+  .animate-tilt-3d { animation: tilt-3d 9s ease-in-out infinite; transform-style: preserve-3d; }
+
+  /* Hover 3D lift */
+  .hover-3d {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .hover-3d:hover {
+    transform: perspective(900px) translateY(-4px) rotateX(3deg) rotateY(-3deg) scale(1.015);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.25), 0 18px 36px -18px rgba(229, 50, 46, 0.35);
+  }
+
+  /* Soft 3D entrance */
+  @keyframes rise-3d {
+    0%   { opacity: 0; transform: perspective(900px) translateY(24px) rotateX(-8deg) scale(0.96); }
+    100% { opacity: 1; transform: perspective(900px) translateY(0) rotateX(0) scale(1); }
+  }
+  .animate-rise-3d { animation: rise-3d 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  /* Slow rotating conic shimmer for hero accents */
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow { animation: spin-slow 18s linear infinite; }
+
+  /* Floating with rotation for icons / orbs */
+  @keyframes float-3d {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-10px) rotate(2deg); }
+  }
+  .animate-float-3d { animation: float-3d 6s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-tilt-3d, .animate-float-3d, .animate-spin-slow, .animate-rise-3d,
+    body::after { animation: none !important; }
+    .hover-3d:hover { transform: none; }
+  }
 }
