@@ -128,7 +128,7 @@ function ToolPage() {
         {/* Top ad: 728x90 — hidden for premium */}
         {!premium ? (
           <div className="mt-6 flex justify-center">
-            <AdSlot width={728} height={90} />
+            <AdSlot width={970} height={120} label="Top Sponsored" />
           </div>
         ) : (
           <div className="mt-6 flex items-center justify-center gap-2 rounded-full bg-gradient-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-glow">
