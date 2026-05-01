@@ -209,13 +209,22 @@ function ToolPage() {
                 className="flex flex-col items-center text-center"
               >
                 <CircularProgress value={progress} />
-                <h3 className="mt-5 text-xl font-extrabold text-secondary">Processing your file…</h3>
+                <h3 className="mt-5 text-xl font-extrabold text-secondary">
+                  {premium ? "Turbo processing…" : "Processing your file…"}
+                </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
                   Estimated time: <span className="font-semibold text-secondary">{secondsLeft}s</span>
+                  {premium && (
+                    <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
+                      <Zap className="h-3 w-3" /> 5× FAST
+                    </span>
+                  )}
                 </p>
-                <div className="mt-8">
-                  <AdSlot width={300} height={250} label="Sponsored" />
-                </div>
+                {!premium && (
+                  <div className="mt-8">
+                    <AdSlot width={300} height={250} label="Sponsored" />
+                  </div>
+                )}
               </motion.div>
             )}
 
