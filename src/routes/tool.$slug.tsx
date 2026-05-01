@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
-import { ArrowLeft, Crown, Download, FileText, UploadCloud, X, Zap } from "lucide-react";
+import { ArrowLeft, Crown, Download, FileText, UploadCloud, X, Zap, Share2, Copy, Mail, MessageCircle, Send, Facebook, Twitter, Linkedin } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { AdSlot } from "@/components/AdSlot";
 import { getTool } from "@/data/tools";
